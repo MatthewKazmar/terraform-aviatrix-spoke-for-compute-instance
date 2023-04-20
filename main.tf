@@ -35,7 +35,7 @@ module "instances" {
   region               = var.region
   ssh_public_key       = var.public_key
   name                 = "${var.name}-${count.index}"
-  subnetwork_self_link = module.instances.subnet_workload.self_link
+  subnetwork_self_link = google_compute_subnetwork.instances.self_link
   instance_number      = count.index
   network_tags         = local.tags
   machine_type         = var.compute_instance_size
