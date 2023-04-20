@@ -54,6 +54,8 @@ variable "compute_instance_size" {
 
 variable "number_of_compute_instances" {
   description = "Number of instances to deploy."
+  type        = number
+  default     = 1
 }
 
 variable "use_aviatrix_firenet_egress" {
