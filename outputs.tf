@@ -5,7 +5,7 @@ output "instances" {
 
 output "names_ips" {
   description = "Hash of name/IP"
-  value = module.instances[*].name_ip
+  value = merge(module.instances[*].name_ip...)
   # value = merge(
   #   [for v in module.instances : v.name_ip]
   # )
