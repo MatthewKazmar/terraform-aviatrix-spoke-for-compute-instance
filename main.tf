@@ -2,6 +2,10 @@ data "aviatrix_account" "this" {
   account_name = var.avx_gcp_account_name
 }
 
+data "http" "myip" {
+  url = "http://ifconfig.me"
+}
+
 module "instance_spoke" {
   source         = "terraform-aviatrix-modules/mc-spoke/aviatrix"
   version        = "1.5.0"
@@ -24,6 +28,17 @@ resource "google_compute_subnetwork" "instances" {
   ip_cidr_range = local.instances
   region        = var.region
   network       = module.instance_spoke.vpc.id
+}
+
+resource "google_compute_firewall" "this" {
+  name    = "${var.name}-admin-rule"
+  network = module.instance_spoke.vpc.id
+
+  allow {
+    protocol = "all"
+  }
+
+  source_ranges = ["35.235.240.0/20", "${data.http.myip.response_body}/32"]
 }
 
 module "instances" {
