@@ -34,7 +34,7 @@ module "instances" {
   avx_gcp_account_name = var.avx_gcp_account_name
   region               = var.region
   ssh_public_key       = var.public_key
-  name                 = "${var.prefix}-${count.index}"
+  name                 = "${var.name}-${count.index}"
   subnetwork_self_link = module.instances.subnet_workload.self_link
   instance_number      = count.index
   network_tags         = local.tags
