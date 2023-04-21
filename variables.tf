@@ -69,10 +69,16 @@ variable "public_key" {
   type        = string
 }
 
+variable "network_tags" {
+  description = "List of tags to apply to the instance. avx-snat-noip is applied if use_aviatrix_egress is set true."
+  type        = list(string)
+  default     = []
+}
+
 locals {
 
   avx       = cidrsubnet(var.cidr, 1, 0) # 10.0.0.0/22 -> 10.0.0.0/24
   instances = cidrsubnet(var.cidr, 1, 1) # 10.0.0.0/22 -> 10.0.1.0/26
 
-  network_tags = var.use_aviatrix_egress ? ["avx-snat-noip"] : null
+  network_tags = var.use_aviatrix_egress ? concat(["avx-snat-noip"], var.network_tags) : var.network_tags
 }
