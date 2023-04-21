@@ -30,6 +30,7 @@ resource "google_compute_subnetwork" "instances" {
   network       = module.instance_spoke.vpc.id
 }
 
+#
 resource "google_compute_firewall" "this" {
   name    = "${var.name}-admin-rule"
   network = module.instance_spoke.vpc.id
@@ -39,20 +40,6 @@ resource "google_compute_firewall" "this" {
   }
 
   source_ranges = ["35.235.240.0/20", "${data.http.myip.response_body}/32"]
-}
-
-resource "google_compute_route" "myip" {
-  name             = "${var.name}-myip"
-  dest_range       = "${data.http.myip.response_body}/32"
-  network          = module.instance_spoke.vpc.id
-  next_hop_gateway = "default-internet-gateway"
-}
-
-resource "google_compute_route" "iap" {
-  name             = "${var.name}-iap"
-  dest_range       = "35.235.240.0/20"
-  network          = module.instance_spoke.vpc.id
-  next_hop_gateway = "default-internet-gateway"
 }
 
 module "instances" {

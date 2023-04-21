@@ -58,10 +58,10 @@ variable "number_of_compute_instances" {
   default     = 1
 }
 
-variable "use_aviatrix_firenet_egress" {
-  description = "Apply the avx_snat_noip tag to nodes for Egress"
+variable "use_aviatrix_egress" {
+  description = "Apply the avx_snat_noip tag to nodes for Egress; disables public IP."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "public_key" {
@@ -74,5 +74,5 @@ locals {
   avx       = cidrsubnet(var.cidr, 1, 0) # 10.0.0.0/22 -> 10.0.0.0/24
   instances = cidrsubnet(var.cidr, 1, 1) # 10.0.0.0/22 -> 10.0.1.0/26
 
-  tags = var.use_aviatrix_firenet_egress ? ["avx-snat-noip"] : null
+  tags = var.use_aviatrix_egress ? ["avx-snat-noip"] : null
 }
