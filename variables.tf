@@ -74,5 +74,5 @@ locals {
   avx       = cidrsubnet(var.cidr, 1, 0) # 10.0.0.0/22 -> 10.0.0.0/24
   instances = cidrsubnet(var.cidr, 1, 1) # 10.0.0.0/22 -> 10.0.1.0/26
 
-  tags = var.use_aviatrix_egress ? ["avx-snat-noip"] : null
+  network_tags = var.use_aviatrix_egress ? ["avx-snat-noip"] : null
 }

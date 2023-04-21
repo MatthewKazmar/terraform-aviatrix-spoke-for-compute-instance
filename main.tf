@@ -53,6 +53,6 @@ module "instances" {
   name                 = "${var.name}-${count.index}"
   subnetwork_self_link = google_compute_subnetwork.instances.self_link
   instance_number      = count.index
-  network_tags         = local.tags
+  network_tags         = local.network_tags
   machine_type         = var.compute_instance_size
 }
